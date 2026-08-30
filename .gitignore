@@ -1,2 +1,7 @@
-# macOS
+node_modules/
+.env
+__pycache__/
+*.pyc
 .DS_Store
+venv/
+.env.local
