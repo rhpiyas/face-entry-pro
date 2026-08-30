@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FaceEntryPro - Biometric Attendance & Campus Intelligence System</title>
+    <meta
+      name="description"
+      content="FaceEntryPro is an AI-powered biometric attendance and campus intelligence system with facial recognition, liveness detection, analytics, and notifications."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="noise-layer"></div>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+    <div class="bg-orb orb-c"></div>
+
+    <header class="site-header">
+      <div class="brand">
+        <div class="brand-mark"><i class="fa-solid fa-fingerprint"></i></div>
+        <div>
+          <p>FaceEntryPro</p>
+          <span>Biometric Attendance & Campus Intelligence System</span>
+        </div>
+      </div>
+
+      <nav class="site-nav">
+        <a href="#hero">Home</a>
+        <a href="#live">Live Campus</a>
+        <a href="#login-portal">Login Portal</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <a class="header-cta" href="#live">
+        <i class="fa-solid fa-circle-play"></i>
+        Live Demo
+      </a>
+    </header>
+
+    <main>
+      <section class="hero section reveal" id="hero">
+        <div class="hero-copy">
+          <div class="eyebrow typing-wrap">
+            <span class="typing-text" id="typingText"></span>
+          </div>
+          <h1>FaceEntryPro</h1>
+          <h2>AI-Powered Biometric Attendance & Campus Intelligence System</h2>
+          <p class="hero-description">
+            FaceEntryPro uses AI-powered facial recognition and liveness detection to automatically record attendance while providing campus intelligence, analytics, and security.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#about">Learn More</a>
+            <a class="btn btn-secondary" href="#live">Live Demo</a>
+          </div>
+
+          <div class="hero-points">
+            <article>
+              <i class="fa-solid fa-shield-halved"></i>
+              <div>
+                <strong>Anti-Spoof</strong>
+                <span>Face, photo, and screen attack resistance</span>
+              </div>
+            </article>
+            <article>
+              <i class="fa-solid fa-wave-square"></i>
+              <div>
+                <strong>Real-Time</strong>
+                <span>Attendance updated live from the campus edge</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="hero-illustration" aria-label="Animated AI camera and student illustration">
+          <div class="illustration-stage">
+            <div class="camera-pod">
+              <div class="camera-lens"></div>
+              <div class="camera-glow"></div>
+            </div>
+            <div class="scan-square"></div>
+            <div class="scan-beam"></div>
+            <div class="student-figure">
+              <div class="student-head"></div>
+              <div class="student-body"></div>
+              <div class="student-arm left"></div>
+              <div class="student-arm right"></div>
+            </div>
+            <div class="verification-badge">
+              <span class="checkmark"><i class="fa-solid fa-camera"></i></span>
+              <div>
+                <strong>System Armed</strong>
+                <small>Waiting for a live campus entry</small>
+              </div>
+            </div>
+            <div class="loading-ring"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="live">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Live Campus Entry</p>
+            <h3>Real-time attendance monitoring</h3>
+          </div>
+          <div class="live-badge"><span></span> LIVE</div>
+        </div>
+
+        <div class="live-dashboard">
+          <div class="live-table-card glass-card">
+            <div class="table-toolbar">
+              <p>Verified campus arrivals appear here in real time.</p>
+              <div class="toolbar-meta">
+                <span><i class="fa-solid fa-wand-magic-sparkles"></i> AI auto-record</span>
+                <span id="liveClock">--:--:--</span>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Student ID</th>
+                    <th>Department</th>
+                    <th>Section</th>
+                    <th>Arrival Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceTable"></tbody>
+              </table>
+              <div class="empty-feed" id="emptyFeed">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <strong>Awaiting the first verified student</strong>
+                <span>The AI camera is actively scanning the campus entrance.</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="ai-camera-panel glass-card" id="aiCameraPanel" data-phase="scanning" aria-live="polite">
+            <div class="camera-panel-head">
+              <div>
+                <p class="eyebrow">AI Camera Live Feed</p>
+                <span><i class="fa-solid fa-video"></i> Gate 01 · North Campus</span>
+              </div>
+              <div class="camera-live-dot"><span></span> LIVE</div>
+            </div>
+
+            <div class="camera-feed" id="cameraFeed">
+              <img id="cameraStudentPhoto" src="https://i.pravatar.cc/640?img=12" alt="Current student in the AI camera feed" />
+              <div class="camera-feed-overlay"></div>
+              <div class="camera-feed-grid"></div>
+              <div class="camera-timestamp"><i class="fa-solid fa-circle"></i><span id="cameraClock">--:--:--</span></div>
+              <div class="camera-label">FACE DETECTION ACTIVE</div>
+              <div class="face-tracker" aria-hidden="true">
+                <span class="tracker-corner top-left"></span>
+                <span class="tracker-corner top-right"></span>
+                <span class="tracker-corner bottom-left"></span>
+                <span class="tracker-corner bottom-right"></span>
+                <span class="tracker-beam"></span>
+              </div>
+              <div class="camera-processing" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="ai-status-card" id="aiStatusCard">
+              <div class="status-icon" id="statusIcon"><i class="fa-solid fa-expand"></i></div>
+              <div class="status-copy">
+                <span class="status-kicker">Real-time AI status</span>
+                <strong id="aiStatusText">Scanning Face...</strong>
+                <small id="aiStatusDetail">Analyzing facial landmarks and camera motion</small>
+              </div>
+              <div class="status-spinner" aria-hidden="true"></div>
+            </div>
+
+            <div class="identity-match" id="identityMatch" aria-live="polite">
+              <img id="identityPhoto" src="https://i.pravatar.cc/100?img=12" alt="" />
+              <div>
+                <span class="identity-label">Verified identity</span>
+                <strong id="identityName">Rakib Hasan Piyas</strong>
+                <p id="identityId">ID: 242-35-182</p>
+                <p id="identityDepartment">Software Engineering</p>
+                <p id="identitySection">Section A</p>
+              </div>
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div class="recorded-banner" id="recordedBanner">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Attendance Recorded Successfully</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section reveal" id="summary">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Attendance Summary</p>
+            <h3>Campus statistics and department breakdown</h3>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card glass-card">
+            <div class="stat-head">
+              <span>Total Students</span>
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <strong id="totalStudentsCount">120</strong>
+            <p>All students across software and computer science sections.</p>
+            <div class="mini-bar"><span style="--fill: 100%"></span></div>
+          </article>
+
+          <article class="stat-card glass-card success">
+            <div class="stat-head">
+              <span>Present</span>
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <strong id="presentCount">0</strong>
+            <p>Live verified attendance for today’s classes.</p>
+            <div class="mini-bar"><span id="presentBar" style="--fill: 0%"></span></div>
+          </article>
+
+          <article class="stat-card glass-card danger">
+            <div class="stat-head">
+              <span>Absent</span>
+              <i class="fa-solid fa-user-xmark"></i>
+            </div>
+            <strong id="absentCount">120</strong>
+            <p>Students not yet marked present in the live session.</p>
+            <div class="mini-bar"><span id="absentBar" style="--fill: 100%"></span></div>
+          </article>
+
+          <article class="stat-card glass-card wide-card">
+            <div class="stat-head">
+              <span>Department Wise</span>
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <div class="dept-blocks">
+              <div class="dept-block">
+                <div class="dept-title">
+                  <strong>Software Engineering</strong>
+                  <span>Total Students: 50</span>
+                </div>
+                <div class="dept-meta">
+                  <span>Present <b id="softwarePresent">0</b></span>
+                  <span>Absent <b id="softwareAbsent">50</b></span>
+                </div>
+                <div class="progress"><span id="softwareBar" style="--fill: 0%"></span></div>
+              </div>
+
+              <div class="dept-block">
+                <div class="dept-title">
+                  <strong>Computer Science &amp; Engineering</strong>
+                  <span>Section A · Total Students: 35</span>
+                </div>
+                <div class="dept-meta">
+                  <span>Present <b id="cseAPresent">0</b></span>
+                  <span>Absent <b id="cseAAbsent">35</b></span>
+                </div>
+                <div class="progress"><span id="cseABar" style="--fill: 0%"></span></div>
+              </div>
+
+              <div class="dept-block">
+                <div class="dept-title">
+                  <strong>Computer Science &amp; Engineering</strong>
+                  <span>Section B · Total Students: 35</span>
+                </div>
+                <div class="dept-meta">
+                  <span>Present <b id="cseBPresent">0</b></span>
+                  <span>Absent <b id="cseBAbsent">35</b></span>
+                </div>
+                <div class="progress"><span id="cseBBar" style="--fill: 0%"></span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="login-portal">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Login Portal</p>
+            <h3>Role-based access cards</h3>
+          </div>
+        </div>
+
+        <div class="portal-grid">
+          <article class="portal-card glass-card">
+            <div class="portal-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <h4>Student Login</h4>
+            <ul>
+              <li>Attendance History</li>
+              <li>Daily Attendance</li>
+              <li>Monthly Attendance</li>
+              <li>View Notifications</li>
+              <li>Profile</li>
+            </ul>
+            <a class="btn btn-outline" href="#">Login</a>
+          </article>
+
+          <article class="portal-card glass-card">
+            <div class="portal-icon"><i class="fa-solid fa-people-roof"></i></div>
+            <h4>Parent Login</h4>
+            <ul>
+              <li>Student Attendance History</li>
+              <li>Attendance Percentage</li>
+              <li>View Alerts</li>
+              <li>View Notifications</li>
+            </ul>
+            <a class="btn btn-outline" href="#">Login</a>
+          </article>
+
+          <article class="portal-card glass-card">
+            <div class="portal-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <h4>Teacher Login</h4>
+            <ul>
+              <li>View Attendance History</li>
+              <li>Monitor Students</li>
+              <li>Send Alerts</li>
+              <li>Generate Reports</li>
+            </ul>
+            <a class="btn btn-outline" href="#">Login</a>
+          </article>
+
+          <article class="portal-card glass-card admin-card">
+            <div class="portal-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <h4>Admin Login</h4>
+            <ul>
+              <li>Smart Video Search</li>
+              <li>Detect Incident</li>
+              <li>Manage Users</li>
+              <li>Attendance Analytics</li>
+              <li>Face Registration</li>
+              <li>System Logs</li>
+            </ul>
+            <a class="btn btn-outline" href="#">Login</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="features">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Features</p>
+            <h3>Core product capabilities</h3>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <article class="glass-card feature-card"><i class="fa-solid fa-face-smile"></i><h4>AI Face Recognition</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-badge-check"></i><h4>Liveness Detection</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-fingerprint"></i><h4>Automatic Attendance</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-magnifying-glass-video"></i><h4>Smart Video Search</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-chart-line"></i><h4>Attendance Analytics</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-bell"></i><h4>Real-Time Notifications</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-building-columns"></i><h4>Campus Intelligence</h4></article>
+          <article class="glass-card feature-card"><i class="fa-solid fa-gauge-high"></i><h4>Admin Dashboard</h4></article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="how-it-works">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">How It Works</p>
+            <h3>Attendance automation timeline</h3>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item glass-card"><span>1</span><p>Student enters campus</p></article>
+          <article class="timeline-item glass-card"><span>2</span><p>AI Camera detects face</p></article>
+          <article class="timeline-item glass-card"><span>3</span><p>Liveness Detection</p></article>
+          <article class="timeline-item glass-card"><span>4</span><p>Face Recognition</p></article>
+          <article class="timeline-item glass-card"><span>5</span><p>Attendance Recorded</p></article>
+          <article class="timeline-item glass-card"><span>6</span><p>Notification Sent</p></article>
+          <article class="timeline-item glass-card"><span>7</span><p>Dashboard Updated</p></article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="about">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">About Project</p>
+            <h3>About FaceEntryPro</h3>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <article class="glass-card about-card">
+            <p>
+              FaceEntryPro is an AI-powered biometric attendance and campus intelligence system designed for educational institutions. It combines facial recognition, anti-spoofing technology, and real-time analytics to automate attendance recording while enhancing campus security.
+            </p>
+            <p>
+              The system performs local face recognition using edge AI, ensuring fast response times and privacy. It also provides administrators with smart video search, attendance analytics, and incident detection.
+            </p>
+          </article>
+
+          <article class="glass-card tech-card">
+            <h4>Technologies</h4>
+            <div class="tech-tags">
+              <span>TensorFlow Lite</span>
+              <span>MediaPipe</span>
+              <span>MobileFaceNet</span>
+              <span>MiniFASNet</span>
+              <span>OpenCV</span>
+              <span>Raspberry Pi</span>
+              <span>Node.js</span>
+              <span>MySQL</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="architecture">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">System Overview</p>
+            <h3>Architecture flow</h3>
+          </div>
+        </div>
+
+        <div class="architecture">
+          <div class="arch-node glass-card"><i class="fa-solid fa-camera"></i><span>Camera</span></div>
+          <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="arch-node glass-card"><i class="fa-solid fa-microchip"></i><span>AI Processing</span></div>
+          <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="arch-node glass-card"><i class="fa-solid fa-face-smile"></i><span>Face Recognition</span></div>
+          <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="arch-node glass-card"><i class="fa-solid fa-database"></i><span>Attendance Database</span></div>
+          <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="arch-node glass-card"><i class="fa-solid fa-display"></i><span>Web Dashboard</span></div>
+          <div class="arch-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="arch-node glass-card"><i class="fa-solid fa-bell"></i><span>Notifications</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer reveal">
+      <div>
+        <strong>FaceEntryPro</strong>
+        <p>Biometric Attendance & Campus Intelligence System</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">GitHub</a>
+        <a href="#">Documentation</a>
+        <a href="#">Contact</a>
+      </div>
+      <p>Copyright © 2026 FaceEntryPro. All rights reserved.</p>
+    </footer>
+
+    <script src="index.js"></script>
+  </body>
+</html>
